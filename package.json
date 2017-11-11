@@ -1,6 +1,6 @@
 {
     "name": "sfn-validator",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Simple Friendly Node.js Validator.",
     "main": "index.js",
     "scripts": {
