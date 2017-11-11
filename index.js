@@ -69,7 +69,7 @@ const TypeMsg = {
     dataURI: "'%s' must be a valid Data URI string.",
 }
 
-function setRule(rule, prefix = "") {
+function parseRule(rule, prefix = "") {
     var _rule = {};
     for (let k in rule) {
         if (typeof rule[k] === "string")
@@ -89,7 +89,7 @@ function setRule(rule, prefix = "") {
             rule[k].msg = {};
         }
         if (rule[k].type == "object" && rule[k].children)
-            rule[k].children = setRule(rule[k].children, `${prefix}${k}.children.`);
+            rule[k].children = parseRule(rule[k].children, `${prefix}${k}.children.`);
         if (!Types.includes(rule[k].type))
             throw new TypeError(`The type ('${rule[k].type}') of '${prefix}${k}' you specified is invalid.`);
         else if (rule[k].equals && (!rule[rule[k].equals] || !rule[rule[k].equals].required))
@@ -339,7 +339,7 @@ class Validator {
      * @param {Object} rule The validating rule.
      */
     set(rule) {
-        return this.rule = setRule(rule);
+        return this.rule = parseRule(rule);
     }
 
     /**
