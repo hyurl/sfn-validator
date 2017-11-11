@@ -1,0 +1,34 @@
+{
+    "name": "sfn-validator",
+    "version": "1.0.0",
+    "description": "Simple Friendly Node.js Validator.",
+    "main": "index.js",
+    "scripts": {
+        "test": "node test.js"
+    },
+    "keywords": [
+        "sfn",
+        "validator",
+        "validate",
+        "form"
+    ],
+    "author": {
+        "name": "Ayon Lee",
+        "email": "i@hyurl.com",
+        "url": "hyurl.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hyurl/sfn-validator.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Hyurl/sfn-validator/issues",
+        "email": "i@hyurl.com"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "is-ip": "^2.0.0",
+        "isbn": "^0.4.0",
+        "color-name": "^1.1.3"
+    }
+}
