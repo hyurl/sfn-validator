@@ -127,7 +127,7 @@ children fields, like this example:
 var rule = {
     multi: {
         type: "object",
-        chhildren: {
+        children: {
             name: "string",
             email: "email"
         }
