@@ -303,7 +303,7 @@ function checkRgbColor(value) {
 }
 
 function byteLength(str) {
-    if (typeof Buffer == "object")
+    if (typeof Buffer == "function" && Buffer.byteLength instanceof Function)
         return Buffer.byteLength(str);
     var b = 0,
         l = str.length;
