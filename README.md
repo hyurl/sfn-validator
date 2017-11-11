@@ -94,7 +94,8 @@ Every field can be defined with these key-value pairs:
 - `length` Only for `string`, `email`, `url`, `ascii`, `base64`, `json` and 
     `array`, could be a number sets an exactly length, or an array sets the 
     minimum and maximum length.
-- `range` Only for `number`, an array set the range of the data value.
+- `range` Only for `number`, an array set the range (minimum and maximum) of 
+    the data value.
 - `strict` Strict mode, only for `number`, `email`, `url`, `color`, `ipv4`, 
     `isbn`, its `false` by default for most types except `number`, which is 
     `true` by default.
