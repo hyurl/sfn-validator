@@ -34,26 +34,29 @@ var validator = new Validator({
         required: true,
         type: "string",
         equals: "password",
-        msg: {
-            required: "%s 必须提供！"
-        }
     },
 });
 
 var data = {
-    name: "Ayon Lee  ",
-    email: "i@LOCALHOST.com",
+    name: "Ayon Lee",
+    email: "i@hyurl.com",
     uuid: "6F9619FF-8B86-D011-B42D-00C04FC964FF",
     money: 200,
     base64: null,
     color: "#ffffff",
     ip: "137.32.0.1",
-    url: "http://localhost.com/",
+    url: "http://hyurl.com/",
     mac: "44:45:53:54:00:00",
     password: "123456",
     check_password: "123456",
 };
 
-console.log(validator.filter(data));
+console.log("Rule:", validator.rule, "\n");
+console.log("Initial Data:", data, "\n");
+console.log("Filtered Data:", validator.filter(data), "\n");
 
-console.log(validator.check(data));
+try {
+    validator.check(data);
+} catch (e) {
+    console.log(e);
+}
