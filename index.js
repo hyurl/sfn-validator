@@ -3,6 +3,28 @@ const url = require("url");
 const IsIp = require("is-ip");
 const { ISBN } = require("isbn");
 const ColorName = require("color-name");
+
+const Types = [
+    "string",
+    "number", // Strict by default, non-strict means numeric string also treated as number.
+    "boolean",
+    "object",
+    "array",
+    "email", // Can be strict.
+    "url", // Can be strict.
+    "date",
+    "time",
+    "color", // Can be strict.
+    "ipv4", // Can be strict.
+    "ipv6",
+    "mac",
+    "uuid",
+    "isbn", // Can be strict.
+    "ascii",
+    "base64",
+    "json",
+    "data-uri",
+];
 const RE = {
     email: /\S+@(\S+\.\S+|localhost)/i,
     url: /([a-z]+\:\/\/|\/\/)(\S+\.\S+|localhost)[\/\?\S]*/i,
@@ -25,27 +47,6 @@ const RE = {
         /#[a-f0-9]{8}|#[a-f0-9]{6}|#[a-f0-9]{3}/i
     ]
 };
-const Types = [
-    "string",
-    "number", // Strict by default, non-strict means numeric string also treated as number.
-    "boolean",
-    "object",
-    "array",
-    "email", // Can be strict.
-    "url", // Can be strict.
-    "date",
-    "time",
-    "color", // Can be strict.
-    "ipv4", // Can be strict.
-    "ipv6",
-    "mac",
-    "uuid",
-    "isbn", // Can be strict.
-    "ascii",
-    "base64",
-    "json",
-    "data-uri",
-];
 const TypeMsg = {
     number: "'%s' must be a valid number or numeric string.",
     object: "'%s' must be a valid object.",
