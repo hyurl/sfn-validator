@@ -239,30 +239,35 @@ function validate(rule, data, prefix = "") {
 
         // Check equivalents.
         if (rule[k].equals && rule[rule[k].equals]) {
-            if (data[k] != data[rule[k].equals])
-                throw new Error(util.format(rule[k].msg.equals || "The value of '%s' must be the same as '%s'.", prefix + k, prefix + rule[k].equals));
+            if (data[k] != data[rule[k].equals]) {
+                var msg = "The value of '%s' must be the same as '%s'.";
+                throw new Error(util.format(rule[k].msg.equals || msg, prefix + k, prefix + rule[k].equals));
+            }
         }
 
         if ((rule[k].type === "array" || strings.includes(rule[k].type)) && rule[k].length) {
             var isArray = rule[k].type === "array",
                 word = isArray ? "element" : "character",
-                words = isArray ? "elements" : "characters";
+                words = isArray ? "elements" : "characters",
+                msg1 = `'%s' must carry at least %d and no more than %d ${words}.`,
+                msg2 = "'%s' must carry %d " + (rule[k].length == 1 ? word : words);
             // Check string/array length.
             if (rule[k].length instanceof Array) {
                 var min = rule[k].length[0],
                     max = rule[k].length[1];
                 if (data[k].length < min || data[k].length > max)
-                    throw new Error(util.format(rule[k].msg.length || `'%s' must carry at least %d and no more than %d ${words}.`, prefix + k, min, max));
+                    throw new Error(util.format(rule[k].msg.length || msg1, prefix + k, min, max));
             } else if (data[k].length != rule[k].length) {
-                throw new Error(util.format(rule[k].msg.length || ("'%s' must carry %d " + (rule[k].length == 1 ? word : words)), prefix + k, rule[k].length));
+                throw new Error(util.format(rule[k].msg.length || msg2, prefix + k, rule[k].length));
             }
         } else if (rule[k].type == "number" && rule[k].range) {
             // Check number range.
             if (rule[k].range instanceof Array) {
                 var min = rule[k].range[0],
-                    max = rule[k].range[1];
+                    max = rule[k].range[1],
+                    msg = "The value of '%s' must between %d and %d.";
                 if (data[k] < min || data[k] > max)
-                    throw new RangeError(util.format(rule[k].msg.range || "The value of '%s' must between %d and %d.", prefix + k, min, max));
+                    throw new RangeError(util.format(rule[k].msg.range || msg, prefix + k, min, max));
             }
         } else if (typeof data[k] == "object") {
             // Walk through object.
