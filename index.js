@@ -250,7 +250,7 @@ function validate(rule, data, prefix = "") {
                 word = isArray ? "element" : "character",
                 words = isArray ? "elements" : "characters",
                 msg1 = `'%s' must carry at least %d and no more than %d ${words}.`,
-                msg2 = "'%s' must carry %d " + (rule[k].length == 1 ? word : words);
+                msg2 = "'%s' must carry %d " + (rule[k].length === 1 ? word : words);
             // Check string/array length.
             if (rule[k].length instanceof Array) {
                 var min = rule[k].length[0],
