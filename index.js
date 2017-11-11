@@ -115,7 +115,6 @@ function filter(rule, data) {
 
 function validate(rule, data, prefix = "") {
     var strings = ["string", "email", "url", "ascii", "base64", "json"],
-        numbers = ["number", "numeric"],
         match = null;
     for (let k in rule) {
         // Deal with undefined and null values.
@@ -244,33 +243,26 @@ function validate(rule, data, prefix = "") {
                 throw new Error(util.format(rule[k].msg.equals || "The value of '%s' must be the same as '%s'.", prefix + k, prefix + rule[k].equals));
         }
 
-        if (strings.includes(rule[k].type) && rule[k].length) {
-            // Check string length.
+        if ((rule[k].type === "array" || strings.includes(rule[k].type)) && rule[k].length) {
+            var isArray = rule[k].type === "array",
+                word = isArray ? "element" : "character",
+                words = isArray ? "elements" : "characters";
+            // Check string/array length.
             if (rule[k].length instanceof Array) {
                 var min = rule[k].length[0],
                     max = rule[k].length[1];
                 if (data[k].length < min || data[k].length > max)
-                    throw new Error(util.format(rule[k].msg.length || "'%s' must carry at least %d and no more than %d characters.", prefix + k, min, max));
+                    throw new Error(util.format(rule[k].msg.length || `'%s' must carry at least %d and no more than %d ${words}.`, prefix + k, min, max));
             } else if (data[k].length != rule[k].length) {
-                throw new Error(util.format(rule[k].msg.length || ("'%s' must carry %d " + (rule[k].length == 1 ? "character." : "characters.")), prefix + k, rule[k].length));
+                throw new Error(util.format(rule[k].msg.length || ("'%s' must carry %d " + (rule[k].length == 1 ? word : words)), prefix + k, rule[k].length));
             }
-        } else if (numbers.includes(rule[k].type) && rule[k].range) {
+        } else if (rule[k].type == "number" && rule[k].range) {
             // Check number range.
             if (rule[k].range instanceof Array) {
                 var min = rule[k].range[0],
                     max = rule[k].range[1];
                 if (data[k] < min || data[k] > max)
                     throw new RangeError(util.format(rule[k].msg.range || "The value of '%s' must between %d and %d.", prefix + k, min, max));
-            }
-        } else if (rule[k].type === "array" && rule[k].length) {
-            // Check array length.
-            if (rule[k].length instanceof Array) {
-                var min = rule[k].length[0],
-                    max = rule[k].length[1];
-                if (data[k].length < min || data[k].length > max)
-                    throw new Error(util.format(rule[k].msg.length || "'%s' must carry at least %d and no more than %d elements.", prefix + k, min, max));
-            } else if (data[k].length != rule[k].length) {
-                throw new Error(util.format(rule[k].msg.length || ("'%s' must carry %d " + (rule[k].length == 1 ? "element." : "elements.")), prefix + k, rule[k].length));
             }
         } else if (typeof data[k] == "object") {
             // Walk through object.
@@ -281,8 +273,8 @@ function validate(rule, data, prefix = "") {
 }
 
 function checkBasicType(rule, data, k, type, prefix = "") {
-    var baseTypes = ["string", "number", "boolean"];
-    if (baseTypes.includes(type) && typeof data[k] != type)
+    var types = ["string", "number", "boolean"];
+    if (types.includes(type) && typeof data[k] != type)
         throw new TypeError(util.format(rule[k].msg.type || `'%s' must be a valid ${type}.`, prefix + k));
 }
 
@@ -330,7 +322,7 @@ function byteLength(str) {
 }
 
 /**
- * Form validator.
+ * Simple Friendly Node.js Validator.
  */
 class Validator {
     /**
