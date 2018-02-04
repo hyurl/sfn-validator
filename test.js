@@ -47,16 +47,16 @@ var data = {
     ip: "137.32.0.1",
     url: "http://hyurl.com/",
     mac: "44:45:53:54:00:00",
-    password: "123456",
+    password: "12345678",
     check_password: "123456",
 };
 
-console.log("Rule:", validator.rule, "\n");
 console.log("Initial Data:", data, "\n");
 console.log("Filtered Data:", validator.filter(data), "\n");
 
 try {
-    validator.check(data);
+    validator.validate(data);
+    console.log("√ - Validating passed.");
 } catch (e) {
-    console.log(e);
+    console.log(e instanceof Error ? e.message : e);
 }

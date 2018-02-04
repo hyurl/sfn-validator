@@ -8,15 +8,11 @@
 npm install sfn-validator --save
 ```
 
-## Import
-
-```javascript
-const Validator = require("sfn-validator");
-```
-
 ## Example
 
 ```javascript
+const Validator = require("sfn-validator");
+
 var validator = new Validator({
     name: {
         type: "string",
@@ -54,12 +50,11 @@ try{
 
 ## API
 
-- `new Validator([rule: object])` Creates a validator with a specified rule.
-- `validator.set(rule: object): object` Sets the validating rule.
-- `validator.check(data: object): object` Checks if the input data are all 
+- `new Validator(rules: object)` Creates a validator with specified rules.
+- `validator.validate(data: object): object` Checks if the input data are all 
     valid.
 - `validator.filter(data: object): boolean` Filters input data according to 
-    the validating rule.
+    the rules.
 
 ## Rules
 
@@ -86,18 +81,18 @@ Every field can be defined with these key-value pairs:
     - `json`
     - `data-uri`
 - `required` Whether the field is required (`true`) or not (`false`, default).
-- `equals` The value of this field should equals to the given field.
+- `equals` The value of this field should be equal to the given field's.
 - `msg` Customize the error message, could be a string that sets all messages,
     or an object sets messages for `type`, `required` and `equals`. If the 
     field has a `length` or `range` property, their error message could be 
     set as well.
 - `length` Only for `string`, `email`, `url`, `ascii`, `base64`, `json` and 
-    `array`, could be a number sets an exactly length, or an array sets the 
+    `array`, could be a number sets an exact length, or an array sets the 
     minimum and maximum length.
 - `range` Only for `number`, an array set the range (minimum and maximum) of 
     the data value.
 - `strict` Strict mode, only for `number`, `email`, `url`, `color`, `ipv4`, 
-    `isbn`, its `false` by default for most types except `number`, which is 
+    `isbn`, it's `false` by default for most types except `number`, which is 
     `true` by default.
 
 ## More Details About Strict Mode
@@ -114,7 +109,7 @@ Every field can be defined with these key-value pairs:
 
 ## What Will Happen If Validating Failed?
 
-If validating succeeded, `validator.check()` will return `true`. But if 
+If validating succeeded, `validator.validate()` will return `true`. But if 
 failed, instead of returning `false`, the validator thrown an error message.
 You can catch the error with a `try...catch...` block, and you can customize 
 the error message by setting the `msg` property.
@@ -125,7 +120,7 @@ If you specify a field's type `object`, then this field can and must carry
 children fields, like this example:
 
 ```javascript
-var rule = {
+var rules = {
     multi: {
         type: "object",
         children: {
@@ -143,5 +138,5 @@ var data = {
 };
 ```
 
-Children rule can be nested and unlimited, **BUT**, if you use `equals` 
+Children rules can be nested and unlimited, **BUT**, if you use `equals` 
 property, be aware that it can only refers to the same depth of the rule.
