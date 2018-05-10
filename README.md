@@ -111,7 +111,7 @@ Every field of rule can be defined with these properties:
 - `ipv4` If strict, reject private and reserved IP addresses.
 - `isbn` If strict, the book number must be prettified with hyphenates (`-`).
 
-## Pre-check of rule Definition
+## Pre-check of Rule Definition
 
 When you call `new Validator()` and pass the rules, the program will perform 
 checking on the rules you provided, if any of them is invalid, an error will 
