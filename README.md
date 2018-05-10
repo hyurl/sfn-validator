@@ -8,6 +8,10 @@
 npm install sfn-validator --save
 ```
 
+## Environment
+
+This package supports any version of Node.js that higher than 4.0.0.
+
 ## Example
 
 ```javascript
@@ -38,11 +42,11 @@ var validator = new Validator({
         required: true,
         equals: "password",
     },
-    url: "url" // Short-hand, equals to {type: "url"}.
+    url: "url" // Short-hand, equal to {type: "url"}.
 });
 
 try{
-    validator.check(data);
+    validator.validate(data);
 }catch(e){
     console.log(e);
 }
@@ -50,30 +54,31 @@ try{
 
 ## API
 
-- `new Validator(rules: object)` Creates a validator with specified rules.
-- `validator.validate(data: object): object` Checks if the input data are all 
+- `new Validator(rules: any)` Creates a validator with specified rules.
+- `validator.validate(data: any)` Checks if the input data are all 
     valid.
-- `validator.filter(data: object): boolean` Filters input data according to 
+    - alias: `validator.check()`
+- `validator.filter(data: any): any` Filters input data according to 
     the rules.
 
 ## Rules
 
-Every field can be defined with these key-value pairs:
+Every field of rule can be defined with these properties:
 
-- `type` The data type to test, could be:
+- `type` The data type to check, could be:
     - `string`
     - `number`
     - `boolean`
-    - `object` Has children fields.
+    - `object` Carries children fields.
     - `array`
     - `email`
     - `url`
-    - `date`
+    - `date` Date instance or a valid date string.
     - `time` Unix timestamp or time string.
     - `color` Color name, hex, RGB, RGBA color string.
     - `ipv4`
     - `ipv6`
-    - `mac` Media Access Control address.
+    - `mac` Media Access Control address (Machine address).
     - `uuid` Universal Unique Identifier. 
     - `isbn` International Standard Book Number.
     - `ascii` Only contains ASCII characters.
@@ -82,37 +87,43 @@ Every field can be defined with these key-value pairs:
     - `data-uri`
 - `required` Whether the field is required (`true`) or not (`false`, default).
 - `equals` The value of this field should be equal to the given field's.
-- `msg` Customize the error message, could be a string that sets all messages,
+- `msg` Customize error messages, could be a string that sets all messages,
     or an object sets messages for `type`, `required` and `equals`. If the 
-    field has a `length` or `range` property, their error message could be 
+    field has a `length` or `range` property, their error messages could be 
     set as well.
-- `length` Only for `string`, `email`, `url`, `ascii`, `base64`, `json` and 
-    `array`, could be a number sets an exact length, or an array sets the 
-    minimum and maximum length.
+- `length` Only for `string`, `email`, `url`, `ascii`, `base64`, `json`, 
+    `data-uri` and `array`, could be a number sets an exact length, or an 
+    array sets the minimum and maximum length.
 - `range` Only for `number`, an array set the range (minimum and maximum) of 
     the data value.
-- `strict` Strict mode, only for `number`, `email`, `url`, `color`, `ipv4`, 
+- `strict` Strict mode, only for `number`, `boolean`, `email`, `url`, `ipv4`, 
     `isbn`, it's `false` by default for most types except `number`, which is 
     `true` by default.
+- `children` Only for `object`, to set children rules.
 
 ## More Details About Strict Mode
 
 - `number` When non-strict, treat numeric string as number.
 - `email` If strict, the email address can only contain ASCII characters, and 
     the hostname must not be `localhost`.
-- `url` If strict, the hostname can only contain ASCII characters, and must 
-    not be `localhost`.
-- `color` When non-strict, hex-color like `#FFFFFFFF` with **8 hex numbers** 
-    is valid.
+- `url` If strict, the hostname can only contain ASCII characters, and the 
+    hostname must not be `localhost`.
 - `ipv4` If strict, reject private and reserved IP addresses.
-- `isbn` If strict, the book number must be prettified.
+- `isbn` If strict, the book number must be prettified with hyphenates (`-`).
+
+## Pre-check of rule Definition
+
+When you call `new Validator()` and pass the rules, the program will perform 
+checking on the rules you provided, if any of them is invalid, an error will 
+be thrown and tells you where is incorrect in your rules, so that you can find 
+and fix it as soon as possible.
 
 ## What Will Happen If Validating Failed?
 
-If validating succeeded, `validator.validate()` will return `true`. But if 
-failed, instead of returning `false`, the validator thrown an error message.
-You can catch the error with a `try...catch...` block, and you can customize 
-the error message by setting the `msg` property.
+If validating failed, `validator.validate()` will thrown an error message.
+You can catch the error with a `try...catch...` block. This package will 
+modify the initial error stack and only shows you the useful parts, so it's 
+very friendly on user-experience.
 
 ## About Children Rule
 
