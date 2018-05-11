@@ -7,7 +7,9 @@
         "outDir": "dist/",
         "experimentalDecorators": true,
         "newLine": "LF",
-        "noUnusedParameters": true
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "sourceMap": true
     },
     "files": [
         "src/index.ts",

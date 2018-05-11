@@ -1,4 +1,5 @@
 "use strict";
+require("source-map-support/register");
 var util_1 = require("./util");
 /**
  * Simple Friendly Node.js Validator.
@@ -40,3 +41,4 @@ var Validator = /** @class */ (function () {
     return Validator;
 }());
 module.exports = Validator;
+//# sourceMappingURL=index.js.map

@@ -1,4 +1,5 @@
 
+import "source-map-support/register";
 import { parseRule, filter, validate, replaceError } from "./util";
 
 /**
