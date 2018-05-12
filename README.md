@@ -33,8 +33,8 @@ var validator = new Validator({
         required: true,
         length: [8, 18],
         msg: {
-            required: "You must provide a `%s` in this form.",
-            equals: "The length of the `%s` should between %d and %d.",
+            required: "You must provide a 'password' in this form.",
+            equals: "The length of the 'password' must between 8 and 18.",
         }
     },
     check_password: {
