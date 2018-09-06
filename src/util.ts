@@ -3,7 +3,7 @@ import * as url from "url";
 import IsIp = require("is-ip");
 import { ISBN } from "isbn";
 import isColor = require("is-color");
-import { Rule, Message } from ".";
+import { Rule, Message, ValidTypes } from ".";
 
 const Strings = [
     "string",
@@ -83,7 +83,7 @@ const TypeMsg = {
 }
 
 /** Parses the given rules into a more proper format. */
-export function parseRule(rules: { [field: string]: string | Rule }, prefix = "") {
+export function parseRule(rules: { [field: string]: ValidTypes | Rule }, prefix = "") {
     var _rules: { [field: string]: Rule } = {};
 
     for (let field in rules) {
@@ -94,7 +94,7 @@ export function parseRule(rules: { [field: string]: string | Rule }, prefix = ""
         let rule: Rule;
 
         if (typeof rules[field] === "string")
-            rule = { type: <string>rules[field] };
+            rule = { type: <ValidTypes>rules[field] };
         else
             rule = <Rule>rules[field];
 

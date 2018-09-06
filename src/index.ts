@@ -11,7 +11,7 @@ class Validator {
     /**
      * Creates a validator with specified rules.
      */
-    constructor(rules: { [field: string]: string | Validator.Rule }) {
+    constructor(rules: { [field: string]: Validator.ValidTypes | Validator.Rule }) {
         try {
             this.rules = parseRule(rules);
         } catch (err) {
@@ -44,6 +44,11 @@ class Validator {
 }
 
 namespace Validator {
+    export type ValidTypes = "string" | "email" | "url" | "ascii" | "base64"
+        | "json" | "data-uri" | "number" | "boolean" | "object" | "array"
+        | "date" | "time" | "color" | "color" | "ipv4" | "ipv6" | "mac" | "uuid"
+        | "isbn";
+
     export type Message = {
         type?: string;
         required?: string;
@@ -53,7 +58,7 @@ namespace Validator {
     };
 
     export interface Rule {
-        type: string;
+        type: ValidTypes;
         required?: boolean;
         /**
          * For types `string`, `email`, `url`, `ascii`, `base64`, `json` and 
@@ -75,7 +80,7 @@ namespace Validator {
         equals?: string;
         /** Customize the error message. */
         msg?: string | Message;
-        children?: { [field: string]: string | Rule };
+        children?: { [field: string]: ValidTypes | Rule };
     }
 }
 
