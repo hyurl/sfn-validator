@@ -33,14 +33,14 @@
     },
     "license": "MIT",
     "dependencies": {
-        "@types/is-color": "^1.0.0",
-        "@types/is-ip": "^2.0.2",
         "is-color": "^1.0.1",
         "is-ip": "^2.0.0",
         "isbn": "^0.4.0",
         "source-map-support": "^0.5.5"
     },
     "devDependencies": {
+        "@types/is-color": "^1.0.0",
+        "@types/is-ip": "^2.0.2",
         "@types/node": "^10.9.4",
         "mocha": "^5.1.1"
     }
