@@ -1,6 +1,6 @@
 {
     "name": "sfn-validator",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "Simple Friendly Node.js Validator.",
     "main": "dist/index.js",
     "types": "src/index.ts",
@@ -35,8 +35,7 @@
     "dependencies": {
         "is-color": "^1.0.1",
         "is-ip": "^2.0.0",
-        "isbn": "^0.4.0",
-        "source-map-support": "^0.5.5"
+        "isbn": "^0.4.0"
     },
     "devDependencies": {
         "@types/is-color": "^1.0.0",
